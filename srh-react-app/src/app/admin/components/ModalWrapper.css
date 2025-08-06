@@ -1,0 +1,40 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content-box {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 30px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeInSlide 0.4s ease-in-out;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.modal-body {
+  margin-top: 20px;
+}

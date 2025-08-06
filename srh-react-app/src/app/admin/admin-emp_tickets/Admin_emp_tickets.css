@@ -1,0 +1,150 @@
+/* Background Gradient */
+body {
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Fade-in Animation */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInSlide 0.7s ease;
+}
+
+/* Card Style with Glassmorphism */
+.ticket-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  padding: 30px;
+  transition: 0.4s ease;
+}
+
+.ticket-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+}
+
+/* Heading */
+.main-heading {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0;
+}
+
+/* Filter Dropdown */
+.status-filter {
+  width: 150px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  border: 1px solid #dcdcdc;
+  transition: all 0.3s;
+  background-color: #ffffff;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.status-filter:hover,
+.status-filter:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+}
+
+/* Table Styling */
+.custom-table {
+  margin-top: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  font-size: 0.95rem;
+  background: white;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  border-collapse: collapse;
+}
+
+.custom-table th {
+  background: linear-gradient(to right, #3f51b5, #5a55ae);
+  color: #fff;
+  font-weight: 600;
+}
+
+.custom-table th,
+.custom-table td {
+  text-align: center;
+  padding: 14px;
+  vertical-align: middle;
+}
+
+.custom-table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f1f8ff;
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Highlight cell on hover */
+.hover-row td:hover {
+  background-color: #e0f7fa;
+}
+
+/* Badge Styling */
+.badge {
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  text-transform: uppercase;
+}
+
+/* Empty State */
+.text-muted {
+  color: #aaa !important;
+  font-style: italic;
+}
+
+/* Filter Animation (Optional with icon if added) */
+.status-filter {
+  background-image: url("data:image/svg+xml,%3Csvg fill='black' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  appearance: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-heading {
+    font-size: 1.6rem;
+  }
+
+  .status-filter {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .custom-table {
+    font-size: 0.85rem;
+  }
+
+  .ticket-card {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,122 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  z-index: 1001;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.menu-btn:hover {
+  transform: scale(1.2);
+  color: #0c0c0c;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 64px;
+  left: -220px;
+  width: 200px;
+  height: calc(100% - 64px);
+  background: linear-gradient(to bottom, #1e3c72, #2a5298);
+  color: white;
+  padding: 1.5rem 1rem;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+}
+
+/* Main content */
+.content {
+  margin-top: 64px;
+  margin-bottom: 48px; /* To prevent overlap with fixed footer */
+  padding: 1.5rem;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+  flex-grow: 1;
+  min-height: calc(100vh - 64px - 48px); /* Exclude navbar + footer */
+  overflow-y: auto;
+}
+
+
+.content.shrink {
+  margin-left: 200px;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background-color: #f1f1f1;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+
