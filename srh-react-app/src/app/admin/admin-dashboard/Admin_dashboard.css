@@ -1,0 +1,29 @@
+.admin-dashboard-container {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.summary-card {
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+}
+
+.pie-chart-wrapper {
+  max-width: 300px;
+  margin: 0 auto;
+  height: 250px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

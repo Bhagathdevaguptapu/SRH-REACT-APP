@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
-import { FaBars, FaTimes } from 'react-icons/fa';
-import './AdminLayout.css'; // Custom styles
+import {
+  Menu,
+  X,
+  LayoutDashboard,
+  Ticket,
+  MessageCircle,
+  LogOut
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import './AdminLayout.css';
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    setSidebarOpen(false);
   };
 
   return (
@@ -14,7 +28,7 @@ export default function AdminLayout({ children }) {
       {/* Navbar */}
       <nav className="navbar">
         <button className="menu-btn" onClick={toggleSidebar}>
-          {sidebarOpen ? <FaTimes /> : <FaBars />}
+          {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
         <h1 className="navbar-title">Admin Panel</h1>
       </nav>
@@ -22,10 +36,22 @@ export default function AdminLayout({ children }) {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <ul>
-          <li>Dashboard</li>
-          <li>Tickets</li>
-          <li>Employees</li>
-          <li>Settings</li>
+          <li onClick={() => handleNavigation('/admin_dashboard')}>
+            <LayoutDashboard className="sidebar-icon" size={20} />
+            Dashboard
+          </li>
+          <li onClick={() => handleNavigation('/admin_emp_tickets')}>
+            <Ticket className="sidebar-icon" size={20} />
+            Tickets
+          </li>
+          <li onClick={() => handleNavigation('/admin_emp_feedbacks')}>
+            <MessageCircle className="sidebar-icon" size={20} />
+            Feedback
+          </li>
+          <li onClick={() => handleNavigation('/admin_login')}>
+            <LogOut className="sidebar-icon" size={20} />
+            Logout
+          </li>
         </ul>
       </aside>
 

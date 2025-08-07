@@ -1,51 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Admin_cancel.css'; // Import the CSS file
+import './Admin_assign.css';
 
-export default function Admin_cancel({ ticketId: initialTicketId, onClose, onCancelSuccess }) {
+
+export default function Admin_assign({ ticketId: initialTicketId, onClose, onAssignSuccess }) {
   const [ticketId, setTicketId] = useState(initialTicketId || '');
-  const [cancelReason, setCancelReason] = useState('');
+  const [departmentId, setDepartmentId] = useState('');
   const [responseMsg, setResponseMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     setTicketId(initialTicketId || '');
-    setCancelReason('');
+    setDepartmentId('');
     setResponseMsg('');
     setErrorMsg('');
   }, [initialTicketId]);
 
-  async function cancelTicket() {
-    if (!cancelReason) {
-      setErrorMsg('Please enter cancel reason');
+  async function assignTicket() {
+    if (!departmentId) {
+      setErrorMsg('Please select a Department');
       return;
     }
 
     try {
-      const response = await axios.post('/api/admin/ticket/cancel', {
+      const response = await axios.post('/api/admin/assign-ticket', {
         ticketId: parseInt(ticketId),
-        cancelReason,
+        departmentId: parseInt(departmentId),
       });
 
       if (response.data?.status === 'success') {
         setResponseMsg(response.data.message);
         setErrorMsg('');
 
-        // Refresh tickets data in parent
-        if (onCancelSuccess) {
-          await onCancelSuccess();
+        if (onAssignSuccess) {
+          await onAssignSuccess();
         }
 
-        // Close modal after short delay
         setTimeout(() => {
           onClose();
         }, 1500);
       } else {
-        setErrorMsg('Failed to cancel ticket');
+        setErrorMsg(response.data?.message || 'Failed to assign ticket');
         setResponseMsg('');
       }
     } catch (error) {
-      setErrorMsg('Error occurred while cancelling the ticket.');
+      setErrorMsg('Error occurred while assigning the ticket.');
       setResponseMsg('');
     }
   }
@@ -53,7 +52,7 @@ export default function Admin_cancel({ ticketId: initialTicketId, onClose, onCan
   return (
     <div className="modal-overlay">
       <div className="modal-content fade-in">
-        <h2 className="modal-title">Cancel Ticket</h2>
+        <h2 className="modal-title">Assign Ticket to Department</h2>
 
         <div className="form-group">
           <label>Ticket ID:</label>
@@ -61,17 +60,20 @@ export default function Admin_cancel({ ticketId: initialTicketId, onClose, onCan
         </div>
 
         <div className="form-group">
-          <label>Cancel Reason:</label>
-          <input
-            type="text"
-            value={cancelReason}
-            onChange={(e) => setCancelReason(e.target.value)}
-            placeholder="Enter cancel reason"
-          />
+          <label>Department:</label>
+          <select
+            value={departmentId}
+            onChange={(e) => setDepartmentId(e.target.value)}
+          >
+            <option value="">-- Select Department --</option>
+            <option value="1">IT Department</option>
+            <option value="2">Non IT Department</option>
+            <option value="3">HR and Finance</option>
+          </select>
         </div>
 
-        <button className="btn btn-primary" onClick={cancelTicket}>
-          Cancel Ticket
+        <button className="btn btn-primary" onClick={assignTicket}>
+          Assign Ticket
         </button>
         <br />
 
