@@ -1,64 +1,129 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import './EmpViewTickets.css';
 
 export default function EmpViewTickets() {
   const [employee, setEmployee] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
-  const employeeId = 100;
+  const [statusFilter, setStatusFilter] = useState('');
+  const [filterSelected, setFilterSelected] = useState(false);
+  const employeeId = 102;
 
   useEffect(() => {
     fetchEmployeeTickets();
   }, []);
 
   async function fetchEmployeeTickets() {
-    await axios.get(`/api/emp/viewMyTickets/${employeeId}`)
-      .then(resp => {
-        if (resp.data?.status === 'success') {
-          setEmployee(resp.data?.data);
-        } else {
-          setErrorMsg(resp.data?.message || "Failed to load tickets");
-        }
-      })
-      .catch(err => {
-        setErrorMsg("Server error: " + err.message);
-      });
+    try {
+      const resp = await axios.get(`/api/emp/viewMyTickets/${employeeId}`);
+      if (resp.data?.status === 'success') {
+        setEmployee(resp.data?.data);
+        console.log("Tickets from backend:", resp.data?.data?.tickets); // 🪵 DEBUG
+      } else {
+        setErrorMsg(resp.data?.message || "Failed to load tickets");
+      }
+    } catch (err) {
+      setErrorMsg("Server error: " + err.message);
+    }
   }
 
+  const handleFilterChange = (e) => {
+    const selected = e.target.value.toLowerCase(); // ✅ normalize
+    setStatusFilter(selected);
+    setFilterSelected(true);
+  };
+
+  const filteredTickets = employee?.tickets?.filter((ticket) =>
+    statusFilter === 'all'
+      ? true
+      : ticket.status?.toLowerCase() === statusFilter
+  ) || [];
+
+  console.log("Status filter:", statusFilter);          
+  console.log("Filtered Tickets:", filteredTickets);   
+
   return (
-    <div>
-      <h2>My Tickets</h2>
+    <div className="container mt-5 fade-in">
+      <div className="ticket-card shadow">
+        <div className="card-body">
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h3 className="main-heading mb-0">🎟️ My Tickets</h3>
+          </div>
 
-      {errorMsg && <p>{errorMsg}</p>}
+          {/* Filter Dropdown */}
+          <div className="filter-wrapper">
+            <select
+              className="form-select status-filter"
+              value={statusFilter}
+              onChange={handleFilterChange}
+            >
+              <option value="">-- Select Status --</option>
+              <option value="all">All</option>
+              <option value="raised">Raised</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="closed">Closed</option>
+            </select>
+          </div>
 
-      {employee ? (
-        <div>
-          <h3>Employee Details</h3>
-          <p>ID: {employee.employeeId}</p>
-          <p>Name: {employee.name}</p>
-          <p>Email: {employee.email}</p>
+          {errorMsg && (
+            <div className="alert alert-danger text-center">{errorMsg}</div>
+          )}
 
-          <h4>Tickets</h4>
-          {employee.tickets && employee.tickets.length > 0 ? (
-            <ul>
-              {employee.tickets.map(ticket => (
-                <li key={ticket.ticketId}>
-                  <p>Title: {ticket.title}</p>
-                  <p>Description: {ticket.description}</p>
-                  <p>Status: {ticket.status}</p>
-                  <p>Comment: {ticket.commentText || 'No comment'}</p>
-                  <p>Commenter Name: {ticket.commenterName || 'N/A'}</p>
-                  <p>Role: {ticket.commenterRole || 'N/A'}</p>
-                  <hr />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No tickets found.</p>
+          {filterSelected && employee && (
+            <>
+              <div className="employee-details mb-4 p-3 rounded shadow-sm bg-light border">
+                <h5 className="mb-2 fw-bold">👤 Employee Details</h5>
+            
+                <p><strong>Name:</strong> {employee.name}</p>
+                <p><strong>Email:</strong> {employee.email}</p>
+              </div>
+
+              <div className="table-responsive">
+                <table className="table custom-table table-hover align-middle">
+                  <thead className="table-dark text-center">
+                    <tr>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Department Comment</th>
+                      <th>Commenter Name</th>
+                      <th>Commenter Role</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredTickets.length > 0 ? (
+                      filteredTickets.map((ticket, index) => (
+                        <tr key={index} className="hover-row text-center">
+                          <td>{ticket.title}</td>
+                          <td>{ticket.description}</td>
+                          <td>
+                            <span className={`badge badge-${ticket.status.toLowerCase()}`}>
+                              {ticket.status?.charAt(0).toUpperCase() + ticket.status?.slice(1).toLowerCase()}
+                            </span>
+                          </td>
+                          <td>{ticket.commentText || <span className="text-muted">No comment</span>}</td>
+                          <td>{ticket.commenterName || <span className="text-muted">N/A</span>}</td>
+                          <td>{ticket.commenterRole || <span className="text-muted">N/A</span>}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="6" className="text-center text-muted">
+                          No tickets found for selected status.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
+          {!filterSelected && !errorMsg && (
+            <p className="text-center text-muted mt-4">Please select a status to view your tickets.</p>
           )}
         </div>
-      ) : (
-        !errorMsg && <p>Loading...</p>
-      )}
+      </div>
     </div>
   );
 }
