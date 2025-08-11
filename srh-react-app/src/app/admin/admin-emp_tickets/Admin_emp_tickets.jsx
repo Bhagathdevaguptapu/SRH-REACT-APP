@@ -5,7 +5,13 @@ import AdminLayout from "../admin-layout/AdminLayout";
 import Admin_cancel from "../admin-cancel/Admin_cancel";
 import Admin_assign from "../admin-assign/Admin_assign";
 
-import { FaIdBadge, FaUser, FaBuilding, FaInfoCircle, FaFileAlt } from "react-icons/fa";
+import {
+  FaIdBadge,
+  FaUser,
+  FaBuilding,
+  FaInfoCircle,
+  FaFileAlt,
+} from "react-icons/fa";
 
 export default function Admin_emp_tickets() {
   const [ticketsData, setTicketsData] = useState([]);
@@ -56,10 +62,13 @@ export default function Admin_emp_tickets() {
   );
 
   const filteredTickets = allTickets
-    .filter((ticket) => statusFilter === "ALL" || ticket.status === statusFilter)
+    .filter(
+      (ticket) => statusFilter === "ALL" || ticket.status === statusFilter
+    )
     .filter(
       (ticket) =>
-        departmentFilter === "ALL" || ticket.assignedToDepartmentName === departmentFilter
+        departmentFilter === "ALL" ||
+        ticket.assignedToDepartmentName === departmentFilter
     )
     .filter((ticket) => {
       if (!searchTerm) return true;
@@ -72,7 +81,10 @@ export default function Admin_emp_tickets() {
     });
 
   useEffect(() => {
-    if (selectedTicket && !filteredTickets.find((t) => t.ticketId === selectedTicket.ticketId)) {
+    if (
+      selectedTicket &&
+      !filteredTickets.find((t) => t.ticketId === selectedTicket.ticketId)
+    ) {
       setSelectedTicket(null);
     }
   }, [filteredTickets, selectedTicket]);
@@ -155,7 +167,12 @@ export default function Admin_emp_tickets() {
           </div>
         </div>
 
-        <div className="tickets-container" role="region" aria-live="polite" aria-atomic="true">
+        <div
+          className="tickets-container"
+          role="region"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <div
             className="ticket-list"
             role="list"
@@ -174,7 +191,9 @@ export default function Admin_emp_tickets() {
                   role="listitem"
                   aria-selected={selectedTicket?.ticketId === ticket.ticketId}
                   className={`ticket-list-item ${
-                    selectedTicket?.ticketId === ticket.ticketId ? "selected" : ""
+                    selectedTicket?.ticketId === ticket.ticketId
+                      ? "selected"
+                      : ""
                   }`}
                   onClick={() => setSelectedTicket(ticket)}
                   onKeyDown={(e) => {
@@ -184,12 +203,10 @@ export default function Admin_emp_tickets() {
                     }
                   }}
                 >
-                  #{ticket.ticketId} - {ticket.title} -{" "}
-                  {ticket.assignedToDepartmentName}
+                  {ticket.ticketId} - {ticket.title}
                 </div>
               ))}
           </div>
-
           <div
             className={`ticket-detail-panel ${isFlipping ? "flip-in" : ""}`}
             role="region"
@@ -202,35 +219,84 @@ export default function Admin_emp_tickets() {
             )}
             {selectedTicket && (
               <div className="detail-card">
+                {/* Title */}
                 <h2 className="detail-title">{selectedTicket.title}</h2>
+
+                {/* Employee Name */}
                 <div className="detail-row">
                   <span className="label">
                     <FaUser /> Employee:
                   </span>
                   <span className="value">{selectedTicket.employeeName}</span>
                 </div>
+
+                {/* Description */}
+                <div className="detail-row">
+                  <span className="label">
+                    <FaFileAlt /> Description:
+                  </span>
+                  <span className="value">{selectedTicket.description}</span>
+                </div>
+
+                {/* Department */}
                 <div className="detail-row">
                   <span className="label">
                     <FaBuilding /> Department:
                   </span>
-                  <span className="value">{selectedTicket.assignedToDepartmentName}</span>
-                </div>
-                <div className="detail-row description-row">
-                  <span className="label">
-                    <FaInfoCircle /> Description:
+                  <span className="value">
+                    {selectedTicket.assignedToDepartmentName || "Unassigned"}
                   </span>
-                  <pre className="description-text">{selectedTicket.description}</pre>
                 </div>
+
+                {/* Status */}
                 <div className="detail-row">
                   <span className="label">
-                    <FaIdBadge /> Status:
+                    <FaInfoCircle /> Status:
                   </span>
-                  <span className="value">{selectedTicket.status.replace(/_/g, " ")}</span>
+                  <span className="value">
+                    {selectedTicket.status.replace(/_/g, " ")}
+                  </span>
                 </div>
+
+                {/* Created At */}
+                <div className="detail-row">
+                  <span className="label">🗓️ Created At:</span>
+                  <span className="value">
+                    {new Date(selectedTicket.createdAt).toLocaleString()}
+                  </span>
+                </div>
+
+                {/* Updated At */}
+                <div className="detail-row">
+                  <span className="label">🔄 Updated At:</span>
+                  <span className="value">
+                    {new Date(selectedTicket.updatedAt).toLocaleString()}
+                  </span>
+                </div>
+
+                
+
+                {/* Cancel Reason */}
+                {selectedTicket.cancelReason && (
+                  <div className="detail-row">
+                    <span className="label">❌ Cancel Reason:</span>
+                    <span className="value">{selectedTicket.cancelReason}</span>
+                  </div>
+                )}
+
+                {/* Close Reason */}
+                {selectedTicket.closeReason && (
+                  <div className="detail-row">
+                    <span className="label">✅ Close Reason:</span>
+                    <span className="value">{selectedTicket.closeReason}</span>
+                  </div>
+                )}
+
                 <div className="action-buttons">
-                  {(selectedTicket.status === "RAISED" ||
-                    selectedTicket.status === "ASSIGNED" ||
-                    selectedTicket.status === "STARTED") && (
+                  {/* The conditional rendering for action buttons remains the same as your current code. */}
+                  {selectedTicket.status === "RAISED" ||
+                  selectedTicket.status === "ASSIGNED" ||
+                  selectedTicket.status === "STARTED" ? (
                     <>
                       <button
                         className="btn btn-primary"
@@ -245,8 +311,7 @@ export default function Admin_emp_tickets() {
                         Cancel
                       </button>
                     </>
-                  )}
-                  {!["RAISED", "ASSIGNED", "STARTED"].includes(selectedTicket.status) && (
+                  ) : (
                     <p className="no-actions-text">No actions available</p>
                   )}
                 </div>
