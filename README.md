@@ -65,7 +65,7 @@ Users can login securely to access their respective dashboards.
 ### 📊 Employee Dashboard  
 Employees can analyze data visually to understand ticket statuses and key metrics.
 
-![Employee Dashboard](https://github.com/user-attachments/assets/abce2ceb-2987-4992-9c01-43b0dd76786e)
+![Employee Dashboard](https://github.com/user-attachments/assets/5c5ada2c-b9c8-4113-90a5-249c847010a4)
 
 ---
 
