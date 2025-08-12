@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DepartmentLayout from '../departmentLayout/DepartmentLayout';
 
 export default function TicketStatus() {
   const [selectedDepartmentId, setSelectedDepartmentId] = useState(null);
@@ -47,11 +48,10 @@ export default function TicketStatus() {
           setErrorMsg(resp.data.message || 'Failed to fetch tickets.');
         }
       })
-      .catch(err => {
+      .catch(() => {
         setLoading(false);
         setIsError(true);
-        setErrorMsg('Server error occurred while fetching tickets.');
-        console.error(err);
+        setErrorMsg('Network error while fetching tickets.');
       });
   };
 
@@ -98,16 +98,10 @@ export default function TicketStatus() {
         setErrorMsg(resp.data.message || 'Failed to update status.');
       }
     })
-    .catch(err => {
+    .catch(() => {
       setLoading(false);
       setIsError(true);
-      if (err.response) {
-        setErrorMsg(`Error: ${err.response.status} - ${err.response.data.message || err.response.statusText}`);
-      } else if (err.request) {
-        setErrorMsg('No response received from server.');
-      } else {
-        setErrorMsg(`Request error: ${err.message}`);
-      }
+      setErrorMsg('Network error while updating status.');
     });
   };
 
@@ -115,112 +109,126 @@ export default function TicketStatus() {
     switch (status) {
       case 'ASSIGNED': return 'bg-warning text-dark';
       case 'IN_PROGRESS': return 'bg-primary';
-      case 'ISSUE_RESOLVED': return 'bg-info';
+      case 'ISSUE_RESOLVED': return 'bg-info text-dark';
       case 'CLOSED': return 'bg-secondary';
       default: return 'bg-light text-dark';
     }
   };
 
   return (
-    <div className="container py-4">
-      <h2 className="mb-4 text-primary">Update Ticket Status</h2>
+    <DepartmentLayout>
+      <div className="container py-5">
+        <h2 className="mb-5 text-primary fw-bold text-center">Update Ticket Status</h2>
 
-      <div className="card p-4 shadow-sm border-0">
-        {/* Department Dropdown */}
-        <div className="mb-3">
-          <label htmlFor="deptId" className="form-label">Select Department</label>
-          <select
-            id="deptId"
-            className="form-select"
-            value={selectedDepartmentId ?? ''}
-            onChange={(e) => setSelectedDepartmentId(e.target.value ? parseInt(e.target.value) : null)}
-          >
-            <option value="" disabled>Select Department</option>
-            <option value="1">IT Support</option>
-            <option value="2">Non IT Support</option>
-            <option value="3">HR Support</option>
-          </select>
-        </div>
-
-        {/* Load Tickets Button */}
-        <div className="mb-4">
-          <button
-            className="btn btn-outline-primary"
-            onClick={fetchDepartmentTickets}
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                Loading...
-              </>
-            ) : 'Load Tickets'}
-          </button>
-        </div>
-
-        {/* Ticket Dropdown */}
-        {departmentTickets.length > 0 && (
-          <div className="mb-3">
-            <label htmlFor="ticketId" className="form-label">Select Ticket</label>
+        <div className="card shadow-sm rounded-4 p-4 mx-auto" style={{ maxWidth: '720px' }}>
+          <div className="mb-4">
+            <label htmlFor="deptId" className="form-label fw-semibold">Select Department</label>
             <select
-              id="ticketId"
-              className="form-select"
-              value={ticketId ?? ''}
-              onChange={onTicketSelect}
+              id="deptId"
+              className="form-select form-select-lg"
+              value={selectedDepartmentId ?? ''}
+              onChange={(e) => setSelectedDepartmentId(e.target.value ? parseInt(e.target.value) : null)}
+              disabled={loading}
             >
-              <option value="" disabled>Select Ticket</option>
-              {departmentTickets.map(ticket => (
-                <option key={ticket.ticketId} value={ticket.ticketId}>
-                  {ticket.ticketId} - {ticket.description?.slice(0, 40)}...
-                </option>
-              ))}
+              <option value="" disabled>Select Department</option>
+              <option value="1">IT Support</option>
+              <option value="2">Non IT Support</option>
+              <option value="3">HR Support</option>
             </select>
           </div>
-        )}
 
-        {/* Status Update Section */}
-        {ticketId && selectedTicket && (
-          <div className="row g-4 mt-2">
-            {/* Current Status */}
-            <div className="col-md-6">
-              <div className="card p-3 bg-light border-start border-4 border-primary shadow-sm">
-                <h6 className="text-muted">Current Status</h6>
-                <span className={`badge fs-6 px-3 py-2 ${getStatusBadge(selectedTicket.status)}`}>
-                  {selectedTicket.status}
-                </span>
-              </div>
-            </div>
-
-            {/* New Status Selector */}
-            <div className="col-md-6">
-              <div className="card p-3 bg-light border-start border-4 border-success shadow-sm">
-                <h6 className="text-muted">Update to</h6>
-                <select
-                  className="form-select mb-3"
-                  value={newStatus}
-                  onChange={(e) => setNewStatus(e.target.value)}
-                >
-                  <option value="" disabled>Select new status</option>
-                  {statusOptions.map(status => (
-                    <option key={status} value={status}>{status}</option>
-                  ))}
-                </select>
-                <button
-                  className="btn btn-success w-100"
-                  onClick={updateStatus}
-                  disabled={loading || !newStatus}
-                >
-                  {loading ? 'Updating...' : 'Update Status'}
-                </button>
-              </div>
-            </div>
+          <div className="mb-4 text-center">
+            <button
+              className="btn btn-primary btn-lg px-5 shadow-sm"
+              onClick={fetchDepartmentTickets}
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Loading...
+                </>
+              ) : 'Load Tickets'}
+            </button>
           </div>
-        )}
 
-        {/* Feedback Messages */}
-        {isError && <div className="alert alert-danger mt-4">{errorMsg}</div>}
-        {successMsg && <div className="alert alert-success mt-4">{successMsg}</div>}
+          {departmentTickets.length > 0 && (
+            <div className="mb-4">
+              <label htmlFor="ticketId" className="form-label fw-semibold">Select Ticket</label>
+              <select
+                id="ticketId"
+                className="form-select form-select-lg"
+                value={ticketId ?? ''}
+                onChange={onTicketSelect}
+                disabled={loading}
+              >
+                <option value="" disabled>Select Ticket</option>
+                {departmentTickets.map(ticket => (
+                  <option key={ticket.ticketId} value={ticket.ticketId}>
+                    {ticket.ticketId} - {ticket.description?.slice(0, 40)}{ticket.description?.length > 40 ? '...' : ''}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {ticketId && selectedTicket && (
+            <div className="row g-4 mt-3">
+              <div className="col-md-6">
+                <div className="card bg-light border-start border-4 border-primary shadow-sm p-3 rounded-3">
+                  <h6 className="text-muted mb-2">Current Status</h6>
+                  <span className={`badge fs-6 px-3 py-2 ${getStatusBadge(selectedTicket.status)}`}>
+                    {selectedTicket.status}
+                  </span>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="card bg-light border-start border-4 border-success shadow-sm p-3 rounded-3 d-flex flex-column">
+                  <h6 className="text-muted mb-3">Update to</h6>
+                  <select
+                    className="form-select form-select-lg mb-3"
+                    value={newStatus}
+                    onChange={(e) => setNewStatus(e.target.value)}
+                    disabled={loading}
+                  >
+                    <option value="" disabled>Select new status</option>
+                    {statusOptions.map(status => (
+                      <option key={status} value={status}>{status}</option>
+                    ))}
+                  </select>
+                  <button
+                    className="btn btn-success btn-lg mt-auto shadow-sm"
+                    onClick={updateStatus}
+                    disabled={loading || !newStatus}
+                  >
+                    {loading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Updating...
+                      </>
+                    ) : 'Update Status'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {isError && (
+            <div className="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+              {errorMsg}
+              <button type="button" className="btn-close" aria-label="Close" onClick={() => setIsError(false)}></button>
+            </div>
+          )}
+
+          {successMsg && (
+            <div className="alert alert-success alert-dismissible fade show mt-4" role="alert">
+              {successMsg}
+              <button type="button" className="btn-close" aria-label="Close" onClick={() => setSuccessMsg('')}></button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </DepartmentLayout>
   );
 }

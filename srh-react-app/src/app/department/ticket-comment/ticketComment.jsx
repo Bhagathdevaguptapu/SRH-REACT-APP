@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DepartmentLayout from '../departmentLayout/DepartmentLayout';
 
 export default function TicketComment() {
   const [selectedDepartmentId, setSelectedDepartmentId] = useState('');
@@ -92,82 +93,148 @@ export default function TicketComment() {
   };
 
   return (
-    <div className="container my-5">
-      <h2 className="mb-4">Add Comment to Ticket</h2>
+    <DepartmentLayout>
+      <div className="bg-light min-vh-100 d-flex align-items-center py-5">
+        <div className="container">
+          <div className="card shadow rounded-lg mx-auto" style={{ maxWidth: '700px' }}>
+            <div className="card-body p-5">
+              <h3 className="card-title text-center mb-4 fw-bold text-primary">
+                Add Comment to Ticket
+              </h3>
 
-      <div className="card p-4 shadow">
-        <div className="mb-3">
-          <label htmlFor="deptId" className="form-label">Select Department</label>
-          <select
-            id="deptId"
-            className="form-select"
-            value={selectedDepartmentId}
-            onChange={(e) => {
-              const val = e.target.value;
-              setSelectedDepartmentId(val);
-              fetchDepartmentTickets(val);
-            }}
-          >
-            <option value="">Select Department</option>
-            <option value="1">IT Support</option>
-            <option value="2">Non IT Support</option>
-            <option value="3">HR Support</option>
-          </select>
-        </div>
+              {/* Department selector */}
+              <div className="mb-4">
+                <label htmlFor="deptId" className="form-label fw-semibold">
+                  Department
+                </label>
+                <select
+                  id="deptId"
+                  className="form-select"
+                  value={selectedDepartmentId}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setSelectedDepartmentId(val);
+                    fetchDepartmentTickets(val);
+                  }}
+                  disabled={loading}
+                >
+                  <option value="" disabled>
+                    -- Select Department --
+                  </option>
+                  <option value="1">IT Support</option>
+                  <option value="2">Non IT Support</option>
+                  <option value="3">HR Support</option>
+                </select>
+              </div>
 
-        {departmentTickets.length > 0 && (
-          <div className="mb-3">
-            <label htmlFor="ticketId" className="form-label">Select Ticket</label>
-            <select
-              id="ticketId"
-              className="form-select"
-              value={ticketId}
-              onChange={(e) => setTicketId(e.target.value)}
-            >
-              <option value="">Select Ticket</option>
-              {departmentTickets.map((t) => (
-                <option key={t.ticketId} value={t.ticketId}>
-                  {t.ticketId} - {t.subject || t.description?.slice(0, 30)}...
-                </option>
-              ))}
-            </select>
+              {/* Ticket and Name side by side */}
+              <div className="row g-3 mb-4">
+                <div className="col-md-7">
+                  <label htmlFor="ticketId" className="form-label fw-semibold">
+                    Ticket
+                  </label>
+                  <select
+                    id="ticketId"
+                    className="form-select"
+                    value={ticketId}
+                    onChange={(e) => setTicketId(e.target.value)}
+                    disabled={loading}
+                  >
+                    <option value="" disabled>
+                      -- Select Ticket --
+                    </option>
+                    {departmentTickets.map((t) => (
+                      <option key={t.ticketId} value={t.ticketId}>
+                        {t.ticketId} - {t.subject || t.description?.slice(0, 40)}...
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-5">
+                  <label htmlFor="commenterName" className="form-label fw-semibold">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    id="commenterName"
+                    className="form-control"
+                    value={commenterName}
+                    onChange={(e) => setCommenterName(e.target.value)}
+                    disabled={loading}
+                    placeholder="Enter your name"
+                  />
+                </div>
+              </div>
+
+              {/* Comment textarea */}
+              <div className="mb-4">
+                <label htmlFor="commentText" className="form-label fw-semibold">
+                  Comment
+                </label>
+                <textarea
+                  id="commentText"
+                  className="form-control"
+                  rows="5"
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  disabled={loading}
+                  placeholder="Write your comment here..."
+                  style={{ resize: 'vertical' }}
+                ></textarea>
+              </div>
+
+              {/* Feedback alerts */}
+              {isError && (
+                <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                  {errorMsg}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                    onClick={() => setIsError(false)}
+                  ></button>
+                </div>
+              )}
+
+              {successMsg && (
+                <div className="alert alert-success alert-dismissible fade show" role="alert">
+                  {successMsg}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                    onClick={() => setSuccessMsg('')}
+                  ></button>
+                </div>
+              )}
+
+              {/* Submit button */}
+              <div className="d-grid mt-4">
+                <button
+                  className="btn btn-primary btn-lg shadow"
+                  onClick={submitComment}
+                  disabled={loading}
+                  type="button"
+                >
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Submitting...
+                    </>
+                  ) : (
+                    'Submit Comment'
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
-        )}
-
-        <div className="mb-3">
-          <label htmlFor="commenterName" className="form-label">Your Name</label>
-          <input
-            type="text"
-            id="commenterName"
-            className="form-control"
-            value={commenterName}
-            onChange={(e) => setCommenterName(e.target.value)}
-          />
         </div>
-
-        <div className="mb-3">
-          <label htmlFor="commentText" className="form-label">Comment</label>
-          <textarea
-            id="commentText"
-            className="form-control"
-            rows="3"
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
-          ></textarea>
-        </div>
-
-        <button
-          className="btn btn-primary"
-          onClick={submitComment}
-          disabled={loading}
-        >
-          {loading ? 'Submitting...' : 'Submit Comment'}
-        </button>
-
-        {/* Feedback messages */}
-        {isError && <div className="alert alert-danger mt-3">{errorMsg}</div>}
-        {successMsg && <div className="alert alert-success mt-3">{successMsg}</div>}
       </div>
-    </div>
+    </DepartmentLayout>
   );
 }
