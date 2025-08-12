@@ -1,0 +1,94 @@
+/* admin_dashboard.css */
+
+/* General Container and Typography */
+.admin-dashboard-container {
+  animation: fadeIn 0.5s ease-in-out;
+  padding: 20px;
+  background-color: #f8f9fa; /* Light gray background for the page */
+  border-radius: 8px;
+}
+
+.dashboard-heading {
+  font-weight: 600;
+  color: #333;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-weight: 500;
+  color: #444;
+}
+
+/* Summary Cards */
+.dashboard-summary-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-summary-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-summary-card h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.dashboard-summary-card h5 {
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.summary-icon {
+  font-size: 2rem;
+  opacity: 0.8;
+}
+
+/* Color classes for summary cards */
+.primary-bg { background-color: #605DFF; } /* A vibrant blue-purple */
+.success-bg { background-color: #3AD984; } /* A fresh green */
+.info-bg { background-color: #5AC3FF; }    /* A bright sky blue */
+.warning-bg { background-color: #FFC83B; }  /* A warm yellow */
+
+/* Chart Cards */
+.dashboard-chart-card {
+  min-height: 450px; /* Ensures consistent chart height */
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pie-chart-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

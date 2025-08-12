@@ -1,0 +1,30 @@
+/* Dropdown styling */
+.modal-content select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: white;
+  appearance: none; /* Removes default arrow for some browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.modal-content select:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+/* Optional: add a custom arrow with a background image */
+/* You can remove this if you don't want a custom arrow */
+.modal-content select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%233f51b5' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px 16px;
+}

@@ -1,0 +1,95 @@
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal card */
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 25px 30px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.main-heading {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #3f51b5;
+}
+
+/* Input styling */
+.modal-content input[type="text"],
+.modal-content input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.modal-content input:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+/* Buttons */
+.modal-content button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:first-of-type {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.modal-content button:first-of-type:hover {
+  background-color: #303f9f;
+}
+
+.modal-content button:last-of-type {
+  background-color: #ef5350;
+  color: white;
+}
+
+.modal-content button:last-of-type:hover {
+  background-color: #d32f2f;
+}
+
+/* Feedback messages */
+.modal-content p {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.modal-content p[style*='green'] {
+  color: #388e3c !important;
+}
+
+.modal-content p[style*='red'] {
+  color: #d32f2f !important;
+}
+
