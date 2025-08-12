@@ -1,0 +1,114 @@
+/* General Layout and Typography */
+.admin-dashboard-container {
+  padding: 2rem; /* Reduced from 3rem */
+  background-color: #F7F9FC;
+  min-height: 100vh;
+}
+
+.admin-dashboard-heading {
+  font-size: 2rem; /* Reduced from 2.25rem */
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 0.5rem;
+}
+
+.admin-dashboard-subheading {
+  font-size: 0.9rem; /* Reduced from 1rem */
+  color: #6c757d;
+  margin-bottom: 1.5rem; /* Reduced from 2rem */
+}
+
+/* Card Styling */
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px; /* Slightly smaller border-radius */
+  background-color: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); /* Softer, smaller shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px); /* Smaller lift on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-card-title {
+  font-size: 1.1rem; /* Reduced from 1.25rem */
+  font-weight: 600;
+  color: #4A55A2;
+  margin-bottom: 1rem; /* Reduced from 1.5rem */
+}
+
+/* Summary Cards Section */
+.admin-summary-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.25rem; /* Reduced from 1.5rem */
+}
+
+.admin-summary-icon {
+  font-size: 2rem; /* Reduced from 2.5rem */
+  margin-bottom: 0.75rem; /* Reduced from 1rem */
+}
+
+.admin-summary-title {
+  font-size: 0.8rem; /* Reduced from 0.9rem */
+  font-weight: 500;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.admin-summary-value {
+  font-size: 2rem; /* Reduced from 2.5rem */
+  font-weight: 700;
+  color: #333333;
+  line-height: 1.2;
+}
+
+/* Icon Color Classes */
+.admin-icon-primary { color: #4A55A2; }
+.admin-icon-success { color: #50C878; }
+.admin-icon-info { color: #64B5F6; }
+.admin-icon-warning { color: #FFBF00; }
+
+/* Chart Cards Section */
+.admin-chart-card {
+  min-height: 400px; /* Reduced from 480px */
+  padding: 1.5rem; /* Reduced from 2rem */
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-chart-container {
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .admin-dashboard-container {
+    padding: 1rem; /* Reduced from 1.5rem */
+  }
+
+  .admin-dashboard-heading {
+    font-size: 1.5rem; /* Reduced from 1.75rem */
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

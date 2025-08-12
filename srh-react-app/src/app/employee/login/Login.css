@@ -1,0 +1,412 @@
+
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  min-height: 100vh;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  position: relative;
+}
+
+.login-blur-background {
+  filter: blur(3px);
+}
+
+.login-left-pane {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left-pane h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.login-left-pane h1 .login-orange {
+  color: #fd7e14;
+}
+
+.login-left-pane p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.login-btn-login {
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #0d6efd;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 160px;
+  transition: background-color 0.3s;
+}
+
+.login-btn-login:hover {
+  background-color: #084298;
+}
+
+.login-right-pane {
+  flex: 1;
+  background-image: url('/assets/login-bg.svg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Modal overlay */
+.login-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.login-modal-overlay.show {
+  display: flex;
+}
+
+/* Modal card (Login & Info) */
+.login-card {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: login-fadeIn 0.3s ease-in-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+@keyframes login-fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.login-card h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Login form elements */
+.login-card label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.login-card input,
+.login-card select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+.login-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.login-card button {
+  padding: 10px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #0d6efd;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.login-card button:hover:not(:disabled) {
+  background-color: #084298;
+}
+
+.login-card button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Close button */
+.login-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 1.8rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.login-close-btn:hover {
+  color: #007BFF;
+}
+
+/* Error text */
+.login-error-text {
+  margin-top: 5px;
+  font-size: 14px;
+  color: red;
+}
+
+.login-error-msg {
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Info modal specific styles */
+#infoModal h2 {
+  font-weight: 700;
+  color: #007BFF;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #007BFF;
+  padding-bottom: 0.5rem;
+}
+
+#infoModal h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #0056b3;
+  font-weight: 600;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.3rem;
+}
+
+#infoModal h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #004080;
+  font-weight: 500;
+}
+
+#infoModal ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+#infoModal ul li {
+  margin-bottom: 0.4rem;
+}
+
+#infoModal p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Scrollbar styling for modal overflow */
+.login-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.login-card::-webkit-scrollbar-thumb {
+  background-color: #007BFF;
+  border-radius: 4px;
+}
+
+.login-card::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-card {
+    padding: 1.5rem 1.5rem;
+    max-width: 90vw;
+  }
+
+  #infoModal h2 {
+    font-size: 1.5rem;
+  }
+
+  .login-left-pane h1 {
+    font-size: 32px;
+  }
+
+  .login-left-pane p {
+    font-size: 16px;
+  }
+}
+/* Modal overlay (shared) */
+.login-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.login-modal-overlay.show {
+  display: flex;
+}
+
+/* Login Modal Card */
+.login-modal-overlay#loginModal .login-card {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  max-width: 420px;     /* narrower */
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: login-fadeIn 0.3s ease-in-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  overflow-y: visible;
+}
+
+/* Info Modal Card */
+.login-modal-overlay#infoModal .login-card {
+  background-color: #f9faff;   /* subtle blueish background */
+  padding: 40px 50px;
+  border-radius: 12px;
+  max-width: 700px;   /* wider */
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;  /* scroll inside if content tall */
+  box-shadow: 0 12px 48px rgba(0, 123, 255, 0.3);
+  border: 2px solid #007BFF;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #004080;
+}
+
+/* Info Modal heading styles */
+#infoModal h2 {
+  font-weight: 700;
+  color: #007BFF;
+  margin-bottom: 1rem;
+  border-bottom: 3px solid #007BFF;
+  padding-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+#infoModal h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #0056b3;
+  font-weight: 600;
+  border-bottom: 1.5px solid #99c2ff;
+  padding-bottom: 0.3rem;
+}
+
+#infoModal h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #003366;
+  font-weight: 500;
+}
+
+/* Info Modal paragraphs and lists */
+#infoModal p,
+#infoModal ul {
+  color: #003366;
+  line-height: 1.6;
+}
+
+#infoModal ul {
+  list-style-type: square;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+#infoModal ul li {
+  margin-bottom: 0.5rem;
+}
+
+/* Scrollbar for info modal */
+.login-modal-overlay#infoModal .login-card::-webkit-scrollbar {
+  width: 10px;
+}
+
+.login-modal-overlay#infoModal .login-card::-webkit-scrollbar-thumb {
+  background-color: #007BFF;
+  border-radius: 5px;
+}
+
+.login-modal-overlay#infoModal .login-card::-webkit-scrollbar-track {
+  background-color: #e0e7ff;
+}
+
+/* Close button styles */
+.login-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 1.8rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.login-close-btn:hover {
+  color: #007BFF;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .login-modal-overlay#loginModal .login-card {
+    max-width: 90vw;
+    padding: 20px;
+  }
+
+  .login-modal-overlay#infoModal .login-card {
+    max-width: 90vw;
+    padding: 25px 30px;
+  }
+
+  #infoModal h2 {
+    font-size: 1.5rem;
+  }
+}
+.login-right-pane {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-image {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border: 4px solid black;
+  border-radius: 10px;
+  transition: opacity 0.5s ease-in-out;
+}
