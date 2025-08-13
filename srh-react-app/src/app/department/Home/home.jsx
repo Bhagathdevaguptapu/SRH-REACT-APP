@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DepartmentLayout from '../departmentLayout/DepartmentLayout';
 import { LayoutDashboard, Ticket, MessageCircle } from 'lucide-react';
 import axios from 'axios';
-import './Home.css';
+import './home.css';
 
 const departments = [
   { id: 1, name: 'IT Support' },
