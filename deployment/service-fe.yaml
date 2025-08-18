@@ -1,0 +1,12 @@
+apiVersion: v1 # Kubernetes API version
+kind: Service # Kubernetes resource kind we are creating
+metadata: # Metadata of the resource kind we are creating
+  name: srh-rct-app-svc
+spec:
+  selector:
+    app: srh-rct-app
+  ports:
+    - protocol: "TCP"
+      port: 5173 # The port that the service is running on in the cluster
+      targetPort: 5173 # The port exposed by the service
+  type: NodePort # type of the service.
