@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment # Kubernetes resource kind we are creating
+metadata:
+  name: srh-react-app-dep
+spec:
+  selector:
+    matchLabels:
+      app: srh-react-app
+  replicas: 2 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: srh-react-app
+    spec:
+      containers:
+        - name: srh-react-app
+          image: laharimuppalla/srh-react-app:latest # Image that will be used to containers in the cluster
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5173 # The port that the container is running on in the cluster
